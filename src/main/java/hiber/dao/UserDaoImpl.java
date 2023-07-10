@@ -18,23 +18,40 @@ public class UserDaoImpl implements UserDao {
     @PersistenceContext
     private EntityManager entityManager;
 
-    @Override
-    public void add(User user) {
-        //sessionFactory.getCurrentSession().persist(user);
-        entityManager.persist(user);
-    }
+//    @Override
+//    public void add(User user) {
+//        entityManager.persist(user);
+//    }
+
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
         TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user", User.class);
         return query.getResultList();
     }
-//    @Override
-//    public List<User> getUsersByCar(String carModel, int carSeries) {
-//        String hql = "from User where car.model = :model and car.series = :series";
-//        TypedQuery<User> query = sessionFactory.getCurrentSession().createQuery(hql, User.class);
-//        query.setParameter("model", carModel);
-//        query.setParameter("series", carSeries);
-//        return query.getResultList();
-//    }
+
+    @Override
+    public User getUserById(long id) {
+//        TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user WHERE user.id = :id",User.class)
+//                .setParameter("id",id);
+//        return query.getSingleResult();
+        return entityManager.find(User.class, id);
+    }
+
+    @Override
+    public void updateUser(User updateUser) {
+        entityManager.merge(updateUser);
+    }
+
+    @Override
+    public void removeUserById(long id) {
+        User user = entityManager.find(User.class, id);
+        if (user != null) {
+            entityManager.remove(user);
+        }
+    }
+    @Override
+    public void save(User user) {
+        entityManager.persist(user);
+    }
 }

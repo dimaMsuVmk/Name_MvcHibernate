@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Users</title>
+    <title>User By Id </title>
     <style>
         html * {
             font-size: 26px;
@@ -22,49 +22,26 @@
 </head>
 <body>
 <table>
-    <thead><b>List of Users:</b>
+    <thead><b>User with id = <span th:text = "${id}"/> </b>
     <tr>
         <th>FirstName</th>
         <th>LastName</th>
         <th>Email</th>
-        <th>Edit</th>
-        <th>Delete</th>
     </tr>
     </thead>
     <tbody>
-    <tr th:each="user : ${users}">
+    <tr>
         <td th:text="${user.firstName}"> FirstName </td>
         <td th:text="${user.lastName}"> LastName </td>
         <td th:text="${user.email}"> Email </td>
-        <td>
-            <a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit</a>
-        </td>
-        <td>
-            <form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
-                <input type="submit" value="Delete">
-            </form>
-        </td>
     </tr>
     </tbody>
 </table>
+<br/>
 <hr/>
-<form th:method="post" th:action="@{/users}" >
-    <label for="firstName">FirstName</label>
-    <input type="text" id="firstName" placeholder="firstName">
-
-    <br>
-
-    <label for="lastName">LastName</label>
-    <input type="text" id="lastName"/>
-
-    <br>
-
-    <label for = "email">Email</label>
-    <input type="text" id="email"/>
-
-    <br>
-
-    <input type="submit" value="Add New User"/>
+<button type="button"><a th:href="@{/users/{id}/edit(id=${user.getId()})}">Edit User</a></button>
+<form th:method="DELETE" th:action="@{/users/{id}(id=${user.getId()})}">
+    <input type="submit" value="Delete">
 </form>
 </body>
 </html>
