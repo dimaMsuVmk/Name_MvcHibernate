@@ -16,6 +16,10 @@ public class HelloController {
         this.userService = userService;
     }
 
+    @ModelAttribute("user")
+    public User getUser(){
+        return new User();
+    }
     @GetMapping("/users")
     public String getUsers(Model model) {
         model.addAttribute("users", userService.getAllUsers());
@@ -46,6 +50,6 @@ public class HelloController {
     @PostMapping("/users")
     public String create(@ModelAttribute User user) {
         userService.save(user);
-        return "users";
+        return "redirect:/users";
     }
 }

@@ -26,7 +26,7 @@ public class UserDaoImpl implements UserDao {
     @Override
     @SuppressWarnings("unchecked")
     public List<User> getAllUsers() {
-        TypedQuery<User> query = entityManager.createQuery("SELECT user FROM User user", User.class);
+        TypedQuery<User> query = entityManager.createQuery("FROM User", User.class);
         return query.getResultList();
     }
 
@@ -45,10 +45,11 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public void removeUserById(long id) {
-        User user = entityManager.find(User.class, id);
-        if (user != null) {
-            entityManager.remove(user);
-        }
+//        User user = entityManager.find(User.class, id);
+//        if (user != null) {
+//            entityManager.remove(user);
+//        }
+        entityManager.createQuery("delete from User where id = :id").setParameter("id",id).executeUpdate();
     }
     @Override
     public void save(User user) {
